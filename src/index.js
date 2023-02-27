@@ -11,15 +11,40 @@ const refs = {
   countryinfo: document.querySelector('.country-info'),
 };
 
-const countryList = countries => {
-  countries.map(country => console.log(country));
-};
-
 refs.input.addEventListener('input', e => {
-  fetchCountries(e);
+  fetchCountries(e).then(countriesList => {
+    console.log(countriesList);
+    if (countriesList.length === 1) {
+      refs.countryinfo.innerHTML = createCountryCard(countriesList[0]);
+      refs.countryList.innerHTML = '';
+      return;
+    }
+    if (countriesList.length > 1 && countriesList.length < 10) {
+      refs.countryList.innerHTML = createCountriesList(countriesList);
+      refs.countryinfo.innerHTML = '';
+      return;
+    } else return;
+  });
 });
 
-`<li class="country-item">
-<img class="country-flag" src="" alt="">
-<p class="country-name"></p>
+const createCountriesList = countriesList => {
+  return countriesList
+    .map(country => {
+      return `<li class="country-item">
+<img class="country-flag" src="${country.flags.svg}" alt="${country.name} flag">
+<p class="country-name">${country.name}</p>
 </li>`;
+    })
+    .join('');
+};
+
+const createCountryCard = country => {
+  const card = `<h2 class="card-name">
+      <img class="country-flag" src="${country.flags.svg}" alt="${country.name} flag"> ${country.name}
+    </h2>
+    <p class="cardText">Capital: <span class="card-info">${country.capital}</span></p>
+    <p class="cardText">Population: <span class="card-info">${country.population}</span></p>
+    <p class="cardText">Languages: <span class="card-info">${country.languages}</span></p>`;
+
+  return card;
+};
