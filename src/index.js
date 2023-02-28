@@ -51,7 +51,7 @@ const createCountriesList = countriesList => {
   return countriesList
     .map(({ name, flags }) => {
       return `<li class="country-item">
-                <img class="country-flag" src="${flags.svg}" alt="flag of ${flags.alt}" width="25" height="15">
+                <img class="country-flag" src="${flags.svg}" alt="${flags.alt}" width="25" height="15">
                 <p class="country-name">${name.common}</p>
               </li>`;
     })
