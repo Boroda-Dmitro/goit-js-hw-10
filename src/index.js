@@ -47,36 +47,32 @@ const creatPage = () => {
 refs.input.addEventListener('input', debounce(creatPage, DEBOUNCE_DELAY));
 
 const createCountriesList = countriesList => {
+  console.log(countriesList);
   return countriesList
-    .map(country => {
+    .map(({ name, flags }) => {
       return `<li class="country-item">
-                <img class="country-flag" src="${country.flags.svg}" alt="flag of ${country.name} ">
-                <p class="country-name">${country.name}</p>
+                <img class="country-flag" src="${flags.svg}" alt="flag of ${flags.alt}" width="25" height="15">
+                <p class="country-name">${name.common}</p>
               </li>`;
     })
     .join('');
 };
 
-const createCountryCard = country => {
-  const languages = languageList(country.languages);
+const createCountryCard = ({ name, flags, capital, population, languages }) => {
+  const languagesList = getLanguages(languages);
   const card = `<h2 class="card-name">
-                  <img class="country-flag" src="${country.flags.svg}" alt="flag of ${country.name} "> ${country.name}
+                  <img class="country-flag" src="${flags.svg}" alt="${flags.alt}" width="25" height="15"> ${name.common}
                 </h2>
-                <p class="card-text">Capital: <span class="card-info">${country.capital}</span></p>
-                <p class="card-text">Population: <span class="card-info">${country.population}</span></p>
-                <p class="card-text">Languages: <span class="card-info">${languages}</span></p>`;
+                <p class="card-text">Capital: <span class="card-info">${capital}</span></p>
+                <p class="card-text">Population: <span class="card-info">${population}</span></p>
+                <p class="card-text">Languages: <span class="card-info">${languagesList}</span></p>`;
 
   return card;
 };
 
-const languageList = languages => {
-  return languages
-    .map(language => {
-      return language.name;
-    })
-    .join(', ');
+const getLanguages = languages => {
+  return Object.values(languages).join(', ');
 };
-
 
 const cleanList = () => {
   refs.countryinfo.innerHTML = '';
