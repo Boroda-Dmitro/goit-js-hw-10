@@ -77,6 +77,7 @@ const languageList = languages => {
     .join(', ');
 };
 
+
 const cleanList = () => {
   refs.countryinfo.innerHTML = '';
   refs.countryList.innerHTML = '';
