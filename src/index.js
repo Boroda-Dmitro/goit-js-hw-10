@@ -5,6 +5,7 @@ import { fetchCountries } from './js/fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
+
 const refs = {
   input: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
@@ -22,21 +23,19 @@ const creatPage = () => {
             'Too many matches found. Please enter a more specific name.'
           );
           cleanList();
-        } else if (countriesList.length === 1) {
-          refs.countryinfo.innerHTML = createCountryCard(countriesList[0]);
-          refs.countryList.innerHTML = '';
-          return;
         } else if (countriesList.length > 1 && countriesList.length < 10) {
           refs.countryList.innerHTML = createCountriesList(countriesList);
           refs.countryinfo.innerHTML = '';
           return;
-        } else {
-          Notiflix.Notify.failure('Oops, there is no country with that name');
-          cleanList();
+        } else  {
+          refs.countryinfo.innerHTML = createCountryCard(countriesList[0]);
+          refs.countryList.innerHTML = '';
+          return;
         }
       })
       .catch(error => {
-        console.log(error);
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+        cleanList();
       });
   } else {
     cleanList();
